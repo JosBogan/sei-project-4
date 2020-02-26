@@ -7,4 +7,8 @@ User = get_user_model()
 
 class Project(models.Model):
     name = models.CharField(max_length=50)
-    owner = models.ForeignKey(User, related_name='projects', null=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='projects', on_delete=models.CASCADE)
+    users = models.ManyToManyField(User, blank=True, related_name='collab_projects')
+
+    def __str__(self):
+        return f'{self.name} by {self.owner}'

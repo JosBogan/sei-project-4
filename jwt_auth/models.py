@@ -7,5 +7,3 @@ class User(AbstractUser):
 
     image = models.CharField(max_length=500, blank=True)
     email = models.EmailField(unique=True)
-
-    

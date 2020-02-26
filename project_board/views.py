@@ -1,4 +1,67 @@
-from django.shortcuts import render
+# pylint: disable=no-member
 
-# Create your views here.
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_401_UNAUTHORIZED, HTTP_202_ACCEPTED, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT
+from rest_framework.permissions import IsAuthenticated
 
+# Model Imports
+from .models import Project
+
+# Serializer Imports
+from .serializers import ProjectSerializer, PopulatedProjectTaskSerializer
+
+class ProjectListView(APIView):
+
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, _request):
+        projects = Project.objects.all()
+        serialized_projects = ProjectSerializer(projects, many=True)
+        return Response(serialized_projects.data)
+
+    def post(self, request):
+        project = ProjectSerializer(data=request.data)
+        request.data['owner'] = request.user.id
+        if project.is_valid():
+            project.save()
+            return Response(project.data, status=HTTP_201_CREATED)
+        return Response(project.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+
+class ProjectDetailView(APIView):
+
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, pk):
+        try:
+            project = Project.objects.get(pk=pk)
+            serialized_project = PopulatedProjectTaskSerializer(project)
+            if request.user in project.users.all():
+                return Response(serialized_project.data)
+            return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
+        except Project.DoesNotExist:
+            return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
+
+    def put(self, request, pk):
+        try:
+            project = Project.objects.get(pk=pk)
+            if project.owner.id != request.user.id:
+                return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
+            updated_project = ProjectSerializer(project, data=request.data)
+            if updated_project.is_valid():
+                updated_project.save()
+                return Response(updated_project.data, status=HTTP_202_ACCEPTED)
+            return Response(updated_project.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+        except Project.DoesNotExist:
+            return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
+
+    def delete(self, request, pk):
+        try:
+            project = Project.objects.get(pk=pk)
+            if project.owner.id != request.user.id:
+                return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
+            project.delete()
+            return Response(status=HTTP_204_NO_CONTENT)
+        except Project.DoesNotExist:
+            return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
+ 
