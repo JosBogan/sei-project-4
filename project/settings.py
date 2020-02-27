@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'jwt_auth',
     'project_board',
-    'tasks'
+    'tasks',
+    'columns'
 ]
 
 MIDDLEWARE = [

@@ -1,13 +1,7 @@
 from rest_framework import serializers
-from .models import Project, Comment
+from .models import Column
 from tasks.models import Task
-from columns.models import Column
-
-class CommentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Comment
-        fields = '__all__'
+from project_board.models import Project
 
 class ColumnSerializer(serializers.ModelSerializer):
 
@@ -23,13 +17,10 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = '__all__'
 
-class ProjectSerializer(serializers.ModelSerializer):
+class PopulatedProjectSerializer(serializers.ModelSerializer):
+
+    tasks = TaskSerializer(many=True)
 
     class Meta:
         model = Project
         fields = '__all__'
-
-class PopulatedProjectTaskSerializer(ProjectSerializer):
-
-    comments = CommentSerializer(many=True)
-    tasks = TaskSerializer(many=True)
