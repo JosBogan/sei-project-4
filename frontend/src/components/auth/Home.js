@@ -17,7 +17,7 @@ class Home extends React.Component{
     return (
       <main className="landing_main">
         <div className="landing_banner">
-          <div>
+          <div className="auth_outer_wrapper">
             <div className={`auth_wrapper ${this.state.register && 'auth_wrapper_register'}`}>
               <h2>{this.state.register ? 'Register' : 'Login'}</h2>
               {

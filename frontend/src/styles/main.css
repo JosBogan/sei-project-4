@@ -32,9 +32,13 @@ h2 {
   transition: all 0.2s;
 }
 
+.auth_outer_wrapper {
+  width: 400px;
+}
+
 .auth_wrapper {
   padding: 30px;
-  width: 400px;
+  /* width: 400px; */
   height: 310px;
   background: #2125292c;
   border-radius: 5px;
@@ -104,4 +108,19 @@ h2 {
 
 .login_register_small {
   font-size: 0.7em;
+  margin-right: 5px;
+}
+
+
+
+
+
+/* Media Queries */
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+  .auth_outer_wrapper {
+    width: 100vw;
+  }
+  
 }
