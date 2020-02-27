@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css?family=Spartan&display=swap');
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: 'Spartan', cursive;
+  color: #212529;
+}
+
+h2 {
+  margin: 0;
+  padding: 0
+}
+
+.landing_main {
+  height: 100vh;
+  width: 100vw;
+  background: #212529;
+  display: flex;
+  align-items: center;
+}
+
+.landing_banner {
+  padding: 50px 0;
+  /* height: 400px; */
+  width: 100%;
+  background: #6ECAB5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.auth_wrapper {
+  padding: 30px;
+  width: 400px;
+  height: 310px;
+  background: #2125292c;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+.auth_wrapper_register {
+  height: 470px;
+}
+
+.login_wrapper > div {
+  margin-top: 20px;
+}
+
+.login_register_switch {
+  margin-top: 10px;
+  cursor: pointer;
+  background: #2125292c;
+  border-radius: 5px;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 10px;
+  border: 0px;
+  border-bottom: 1px solid #212529;
+  background: none;
+  /* border-radius: 5px; */
+}
+
+.input:active {
+  background: none;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  border: 0px;
+  border-radius: 5px;
+  background: #FCF8FD;
+  border-bottom: 2px solid #212529;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.button:active {
+  margin-top: 2px;
+  border-bottom: 0px;
+  transform: translateY(2px);
+}
+
+.input_label {
+  display: block;
+  margin-bottom: 10px;
+  pointer-events: none;
+  font-size: 1em;
+  transform: translate(10px, 0px);
+  transition: all 0.2s;
+}
+
+.input_label_on_focus {
+  font-size: 1em;
+  transform: translate(10px, 35px);
+}
+
+.login_register_small {
+  font-size: 0.7em;
+}
