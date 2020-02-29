@@ -22,14 +22,14 @@ class Home extends React.Component{
               <h2>{this.state.register ? 'Register' : 'Login'}</h2>
               {
                 this.state.register ?
-                <RegisterForm /> :
-                <LoginForm />
+                  <RegisterForm handleRegisterChange={this.handleRegisterChange}/> :
+                  <LoginForm {...this.props}/>
               }
             </div>
             <div className="login_register_switch" onClick={this.handleRegisterChange}>
               <span className="login_register_small">go to </span>
               {this.state.register ? 'Login' : 'Register'}
-              </div>
+            </div>
           </div>
         </div>
       </main>

@@ -5,4 +5,6 @@ export const headers = {
   common: {
     'X-CSRF-TOKEN': csrftoken
   }
+  // later on you can include this (remember to import it)
+  // headers: { Authorization: `Bearer ${getToken()}` } 
 }
