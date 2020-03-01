@@ -7,7 +7,7 @@ User = get_user_model()
 
 class Project(models.Model):
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=100, blank=True)
+    description = models.CharField(max_length=500, blank=True)
     owner = models.ForeignKey(User, related_name='projects', on_delete=models.CASCADE)
     users = models.ManyToManyField(User, blank=True, related_name='collab_projects')
 

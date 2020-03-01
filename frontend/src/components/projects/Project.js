@@ -8,6 +8,7 @@ import Sidebar from './Sidebar'
 import ProjectMain from './ProjectMain'
 import NewProject from './NewProject'
 import User from './User'
+import NotFound from '../common/NotFound'
 
 import { Switch, Route } from 'react-router-dom'
 
@@ -15,25 +16,25 @@ class Project extends React.Component {
 
   state = {
     data: null,
-    new: false
+    new: false,
+    project: null
   }
 
   handleNewProject = () => {
     this.setState({ new: true })
   }
 
-  getData = async () => {
+  getUserData = async () => {
     const { data } = await axios.get('/api/users/me', {
       headers: {
         Authorization: `Bearer ${Auth.getToken()}`
       }
     })
-    console.log(data)
     this.setState({ data })
   }
 
   componentDidMount() {
-    this.getData()
+    this.getUserData()
   }
 
   render() {
@@ -53,10 +54,11 @@ class Project extends React.Component {
           </div>
           <div className="project_main_wrapper">
           <Switch>
-            <Route path="/project-board/new" render={(props) => <NewProject {...props} getData={this.getData}/>}/>
+            <Route path="/project-board/new" render={(props) => <NewProject {...props} getUserData={this.getUserData}/>}/>
             <Route path="/project-board/user" component={User}/>
             {/* <Route path="/project-board/new" component={NewProject}/> */}
-            <Route path="/project-board/:id" component={ProjectMain}/>
+            <Route path="/project-board/:id" render={(props) => <ProjectMain {...props} getUserData={this.getUserData}/>}/>
+            {/* <Route path="/project-board/:id" component={ProjectMain}/> */}
             {/* { this.state.new ?
               <NewProject /> :
               <ProjectMain />

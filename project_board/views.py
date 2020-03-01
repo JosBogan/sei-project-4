@@ -24,6 +24,8 @@ class ProjectListView(APIView):
         project = ProjectSerializer(data=request.data)
         request.data['owner'] = request.user.id
         request.data['users'] = [request.user.id]
+        if not request.data['description']:
+            request.data['description'] = 'Add project description'
         if project.is_valid():
             project.save()
             return Response(project.data, status=HTTP_201_CREATED)

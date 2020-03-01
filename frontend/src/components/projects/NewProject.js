@@ -36,7 +36,6 @@ class NewProject extends React.Component {
       }
     })
     this.setState({ users: data })
-    console.log(data)
   }
 
   handleSubmit = async (event) => {
@@ -47,11 +46,9 @@ class NewProject extends React.Component {
           Authorization: `Bearer ${Auth.getToken()}`
         }
       })
-      console.log(res)
-      this.props.getData()
+      this.props.getUserData()
       this.props.history.push(`/project-board/${res.data.id}`)
-    }
-    catch (err) {
+    } catch (err) {
       if (err.response.data.name) this.setState({ fieldError: true })
     }
   }
@@ -77,11 +74,11 @@ class NewProject extends React.Component {
             <div className="new_project_input_wrapper">
               <label 
                 className="new_project_input_label"
-                name="description"
               >Description</label>
               <div>
                 <textarea 
                   className="new_project_text_field"
+                  name="description"
                   onChange={this.handleChange}
                   />
               </div>

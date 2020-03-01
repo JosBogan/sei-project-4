@@ -22,6 +22,7 @@ class LoginForm extends React.Component {
     event.preventDefault()
     try {
       const res = await axios.post('/api/login/', this.state.data, headers)
+      console.log(headers)
       Auth.setToken(res.data.token)
       this.props.history.push('/project-board')
     } catch (err) {

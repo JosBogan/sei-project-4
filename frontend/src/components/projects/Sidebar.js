@@ -14,6 +14,21 @@ class Sidebar extends React.Component {
     this.setState({ selected: 'new' })
   }
 
+  checkCorrectTagSelected = () => {
+    const project = this.props.history.location.pathname.replace('/project-board/', '')
+    if (this.state.selected !== project) {
+      this.setState({ selected: project })
+    }
+  }
+
+  componentDidUpdate = () => {
+    this.checkCorrectTagSelected()
+  }
+
+  componentWillMount = () => {
+    this.checkCorrectTagSelected()
+  }
+
   handleProjectRedirect = (event) => {
     this.props.history.push(`/project-board/${event.target.getAttribute('name')}`)
     this.setState({ selected: event.target.getAttribute('name') })
