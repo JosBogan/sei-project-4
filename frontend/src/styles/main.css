@@ -357,6 +357,10 @@ label {
   cursor: pointer;
 }
 
+.project_name:hover .edit_project_name_icon {
+  opacity: 1;
+}
+
 .project_header_edit {
   font-size: 2.5em;
 }
@@ -372,6 +376,10 @@ label {
 
 .project_description {
   margin-top: 20px;
+}
+
+.project_description:hover .edit_project_description_icon {
+  opacity: 1;
 }
 
 .project_edit_description {
@@ -430,7 +438,7 @@ label {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   padding: 20px 10px;
   border-radius: 10px;
   display: flex;
@@ -527,7 +535,7 @@ div.new_column_close {
 
 .task_delete {
   /* color: red; */
-  width: 20px;
+  min-width: 20px;
   height: 20px;
   background: rgb(212, 50, 50);
   font-size: 1.5em;
@@ -536,7 +544,6 @@ div.new_column_close {
   align-items: center;
   border-radius: 50%;
   /* background: var(--light_colour); */
-  transform: rotate(45deg);
   cursor: pointer;
 }
 
@@ -751,6 +758,85 @@ div.task_in.progress > div {
   margin-bottom: 0px;
 }
 
+
+/* User Profile */
+
+.user_page_wrapper {
+  height: 100%;
+  width: 100%;
+  padding: 40px 30px;
+}
+
+.user_page_header {
+  display: flex;
+}
+
+.user_page_image {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+
+.user_page_info {
+  flex-grow: 1;
+  padding: 10px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.user_page_username {
+  font-size: 3em;
+  cursor: pointer;
+}
+
+.edit_username_icon, .edit_email_icon, .edit_project_name_icon, .edit_project_description_icon {
+  display: inline-block;
+  height: 25px;
+  margin-left: 30px;
+  width: 25px;
+  background: url(../assets//edit-24px.svg);
+  opacity: 0;
+  transition: all 0.05s linear;
+  pointer-events: none;
+}
+
+.user_page_username:hover .edit_username_icon {
+  opacity: 1;
+}
+
+.user_page_email:hover .edit_email_icon {
+  opacity: 1;
+}
+
+.user_page_email {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.user_page_image_input {
+  display: none;
+}
+
+.user_page_username_edit {
+  font-size: 3em;
+  background: none;
+  border: 0px;
+  font-family: 'Spartan', cursive;
+  font-weight: bold;
+  border-bottom: 1px solid var(--dark_colour);
+}
+
+.user_page_email_edit {
+  font-size: 1.5em;
+  background: none;
+  border: 0px;
+  font-family: 'Spartan', cursive;
+  border-bottom: 1px solid var(--dark_colour);
+}
 
 
 .popup_close {

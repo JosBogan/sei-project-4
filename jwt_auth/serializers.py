@@ -39,11 +39,17 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = '__all__'
 
+class EditUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
 class SearchUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'image', 'id')
+        fields = ('username', 'image', 'id', 'email')
 
 class PopulatedUserSerializer(serializers.ModelSerializer):
 

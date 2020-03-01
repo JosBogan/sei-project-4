@@ -1,7 +1,7 @@
 import React from 'react'
 
 const NotFound = () => (
-  <section>
+  <section className="project_main">
     <div>
       <div>
         Not Found

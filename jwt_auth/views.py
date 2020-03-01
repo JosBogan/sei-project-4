@@ -4,10 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.status import HTTP_422_UNPROCESSABLE_ENTITY, HTTP_404_NOT_FOUND
+from rest_framework.status import HTTP_422_UNPROCESSABLE_ENTITY, HTTP_404_NOT_FOUND, HTTP_202_ACCEPTED
 
 # Serializer Imports
-from .serializers import UserSerializer, PopulatedUserSerializer, SearchUserSerializer
+from .serializers import UserSerializer, PopulatedUserSerializer, SearchUserSerializer, EditUserSerializer
 # Model Imports
 from django.contrib.auth import get_user_model
 
@@ -68,5 +68,16 @@ class UserDetailView(APIView):
             serialized_user = PopulatedUserSerializer(user)
             print(serialized_user)
             return Response(serialized_user.data)
+        except User.DoesNotExist:
+            return Response({'message': 'Does Not Exist'}, status=HTTP_404_NOT_FOUND)
+
+    def put(self, request):
+        try:
+            user = User.objects.get(pk=request.user.id)
+            updated_user = SearchUserSerializer(user, data=request.data)
+            if updated_user.is_valid():
+                updated_user.save()
+                return Response(updated_user.data, HTTP_202_ACCEPTED)
+            return Response(updated_user.errors, HTTP_422_UNPROCESSABLE_ENTITY)
         except User.DoesNotExist:
             return Response({'message': 'Does Not Exist'}, status=HTTP_404_NOT_FOUND)

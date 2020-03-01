@@ -21,6 +21,8 @@ class ProjectMain extends React.Component {
     column: null,
     newTask: false,
     newTaskText: '',
+    editTask: null,
+    editTaskText: '',
     edit: {
       name: false,
       description: false,
@@ -44,13 +46,17 @@ class ProjectMain extends React.Component {
       data.tasks.forEach(task => {
         task.columns.sort((a,b) => a.id - b.id)
       })
+      data.tasks.sort((a, b) => a.id - b.id)
       this.setState({ 
         project: data, 
         newTask: false, 
-        edit: { ...this.state.edit, newName: data.name, newDescription: data.description }
+        edit: { ...this.state.edit, newName: data.name, newDescription: data.description },
+        editTask: null,
+        editTaskText: ''
         })
     } catch(err) {
-      console.log(err.response)
+        console.log(this.props.history.push('/project-board/notfound'))
+        // this.props.history.push
     }
   }
 
@@ -148,6 +154,10 @@ class ProjectMain extends React.Component {
     this.setState({ edit })
   }
 
+  handleTaskChange = (event) => {
+    this.setState({ editTaskText: event.target.value })
+  }
+
   setEdit = (event) => {
     const edit = { ...this.state.edit, [event.target.getAttribute('name')]: true }
     this.setState({ edit })
@@ -167,6 +177,21 @@ class ProjectMain extends React.Component {
     this.getProjectData()
     this.props.getUserData()
     this.setState({ edit })
+  }
+
+  editTaskText = (taskId, taskText) => {
+    this.setState({ editTask: taskId, editTaskText: taskText })
+  }
+
+  sendTaskEdit = async (taskId) => {
+    try {
+      const res = await axios.put(`/api/projects/${this.state.project.id}/tasks/${taskId}/`, { text: this.state.editTaskText }, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      this.getProjectData()
+    } catch (err) {
+      console.log(err.response)
+    }
   }
 
   closePopUp = () => {
@@ -197,10 +222,10 @@ class ProjectMain extends React.Component {
           <div className="project_header">
             {!this.state.edit.name ?
             <h1
-              className="project_header_edit_click"
+              className="project_name project_header_edit_click"
               name="name"
               onClick={this.setEdit}
-            >{project.name}</h1> :
+            >{project.name}<span className="edit_project_name_icon"></span></h1> :
             <form onSubmit={this.sendEdit}>
             <input 
               className="input project_header_edit" 
@@ -216,7 +241,7 @@ class ProjectMain extends React.Component {
               className="project_description project_header_edit_click"
               name="description"
               onClick={this.setEdit}
-            >{project.description}</p> :
+            >{project.description}<span className="edit_project_description_icon"></span></p> :
               <textarea
                 className="project_description project_edit_description"
                 name="newDescription"
@@ -261,12 +286,25 @@ class ProjectMain extends React.Component {
               <div key={task.id} className="task_container">
                 <div className="task_colour" style={{ background: '#6ECAB5' }}></div>
                 <div className="task_content_container">
-                  <p className="task_text">
+                {task.id === this.state.editTask ? 
+                  <input 
+                    className="task_text new_task_input" style={{ fontSize: '1em' }}
+                    onBlur={() => this.sendTaskEdit(task.id)}
+                    onKeyPress={(event) => {if (event.key === "Enter") return this.sendTaskEdit(task.id)}}
+                    autoFocus
+                    onChange={this.handleTaskChange}
+                    value={this.state.editTaskText}
+                  /> :
+                  <p 
+                    onClick={() => this.editTaskText(task.id, task.text)}
+                    className="task_text"
+                  >
                     {task.text}
                     <span 
                       onClick={() => this.taskDelete(task.id)}
                       className="task_delete"></span>
                   </p>
+                  }
                   {task.columns.map(column => (
                     <div 
                       key={column.id} 
