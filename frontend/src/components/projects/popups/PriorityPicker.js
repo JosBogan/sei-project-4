@@ -7,26 +7,32 @@ class StatusPicker extends React.Component{
         <div className="popup_close" onClick={this.props.closePopUp}></div>
         <div 
           onClick={(event) => this.props.handleSetColumn(event)}
-          className="picker_option picker_done"
-          data-type="status"
-          data-value="done"
-        >Done</div>
+          className="picker_option picker_urgent"
+          data-type="priority"
+          data-value="urgent"
+        >Urgent</div>
         <div 
           onClick={(event) => this.props.handleSetColumn(event)}
-          className="picker_option picker_progress"
-          data-type="status"
-          data-value="in progress"
-        >In Progress</div>
+          className="picker_option picker_high"
+          data-type="priority"
+          data-value="high"
+        >High</div>
         <div 
           onClick={(event) => this.props.handleSetColumn(event)}
-          className="picker_option picker_stuck"
-          data-type="status"
-          data-value="stuck"
-        >Stuck</div>
+          className="picker_option picker_medium"
+          data-type="priority"
+          data-value="medium"
+        >Medium</div>
+        <div 
+          onClick={(event) => this.props.handleSetColumn(event)}
+          className="picker_option picker_low"
+          data-type="priority"
+          data-value="low"
+        >Low</div>
         <div 
           onClick={(event) => this.props.handleSetColumn(event)}
           className="picker_option picker_blank"
-          data-type="status"
+          data-type="priority"
           data-value=""
         ></div>
       </div>

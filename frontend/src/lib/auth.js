@@ -26,6 +26,18 @@ class Auth {
     const now = Math.round(Date.now() / 1000)
     return now < payload.exp
   }
+
+  static isOwner(owner) {
+    try {
+      const payload = this.getPayload()
+      console.log(payload, owner)
+      if (payload.sub !== owner) return false
+      return true
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
 }
 
 export default Auth

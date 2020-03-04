@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Project, Comment
 
 # Serializer Imports
-from .serializers import ProjectSerializer, PopulatedProjectTaskSerializer, CommentSerializer
+from .serializers import ProjectSerializer, PopulatedProjectTaskSerializer, PopulatedCommentSerializer, CommentSerializer
 
 class ProjectListView(APIView):
 
@@ -23,7 +23,11 @@ class ProjectListView(APIView):
     def post(self, request):
         project = ProjectSerializer(data=request.data)
         request.data['owner'] = request.user.id
-        request.data['users'] = [request.user.id]
+        print(request.data)
+        if request.data['users']:
+            request.data['users'].insert(0, request.user.id)
+        else:
+            request.data['users'] = [request.user.id]
         if not request.data['description']:
             request.data['description'] = 'Add project description'
         if project.is_valid():
@@ -48,8 +52,8 @@ class ProjectDetailView(APIView):
     def put(self, request, pk):
         try:
             project = Project.objects.get(pk=pk)
-            if project.owner.id != request.user.id:
-                return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
+            # if project.owner.id != request.user.id:
+            #     return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
             updated_project = ProjectSerializer(project, data=request.data)
             if updated_project.is_valid():
                 updated_project.save()
@@ -61,8 +65,8 @@ class ProjectDetailView(APIView):
     def delete(self, request, pk):
         try:
             project = Project.objects.get(pk=pk)
-            if project.owner.id != request.user.id:
-                return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
+            # if project.owner.id != request.user.id:
+            #     return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
             project.delete()
             return Response(status=HTTP_204_NO_CONTENT)
         except Project.DoesNotExist:
@@ -87,6 +91,17 @@ class CommentListView(APIView):
         except Project.DoesNotExist:
             return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
 
+    def get(self, request, pk):
+        try:
+            project = Project.objects.get(pk=pk)
+            if request.user not in project.users.all():
+                return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
+            comments = Comment.objects.filter(project=pk)
+            serialized_comment = PopulatedCommentSerializer(comments, many=True)
+            return Response(serialized_comment.data)
+        except Project.DoesNotExist:
+            return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
+            
 class CommentDetailView(APIView):
 
     permission_classes = (IsAuthenticated, )

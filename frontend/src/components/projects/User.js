@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 import Auth from '../../lib/auth'
 
@@ -17,18 +18,14 @@ class User extends React.Component {
     }
   }
 
-  handleLogout = () => {
-    Auth.logout()
-    this.props.history.push('/')
-  }
-
   imageUpload = async (event) => {
     console.log(event.target.files)
-    const data = new FormData
+
+    const data = new FormData()
     data.append('file', event.target.files[0])
     data.append('upload_preset', 'hmrrfxib')
     try {
-      const res = await axios.post('https://api.cloudinary.com/v1_1/dzctontbo/image/upload', data)
+      const res = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_USER_KEY}/image/upload`, data)
       const updated_user = { ...this.state.user, image: res.data.url }
       await axios.put('/api/users/me/', updated_user, {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
@@ -87,6 +84,8 @@ class User extends React.Component {
   render() {
     if (!this.state.user) return null
     const { user } = this.state
+    const { tasks } = user
+    console.log(tasks)
     return (
       <section className="project_main">
         <div className="user_page_wrapper">
@@ -132,7 +131,45 @@ class User extends React.Component {
               }
             </div>
           </div>
-          <button className="button" onClick={this.handleLogout}>Logout</button>
+          <div className="user_tasks_wrapper">
+            <h2 className="user_tasks_header">My Tasks</h2>
+            <div>
+              {tasks.map(taskCol => {
+                const task = taskCol.task
+                return (
+                  <Link key={task.id} to={`/project-board/${task.project}`}>
+                <div key={task.id} className="task_container">
+                  <div className="task_colour" style={{ background: '#6ECAB5' }}></div>
+                  <div className="task_content_container">
+                  <p className="task_text no_click">{task.text}</p>
+                  {task.columns.map(column => (
+                    <div 
+                      key={column.id} 
+                      className={`task_column_outer no_click task_column_${column.col_type} task_column_${column[column.col_type]}`}
+                    >
+                    <div className="task_column">
+                      {column.col_type === 'users' &&
+                      <div 
+                        className="user_column_image user_column_padding" 
+                        // style={{ backgroundImage: `url('${column.users[0] && project.users.find(user => user.id === column.users[0]).image}')` }
+                      >
+                      </div>
+                      }
+                      {column.col_type === 'numbers' && column[column.col_type]}
+                      {column.col_type === 'text' && column[column.col_type]}
+                      {column.col_type === 'priority' && column[column.col_type]}
+                      {column.col_type === 'status' && column[column.col_type]}
+                      {column.col_type === 'date' && column[column.col_type]}
+                      {column.col_type === 'file' && column[column.col_type] && <div className={`column_file_iconpointer_evencolumn_file_${column[column.col_type].split('.').pop()}`}></div>}
+                    </div>
+                    </div>
+                  ))}
+                  </div>
+                </div>
+                </Link>
+              )})}
+            </div>
+          </div>
         </div>
       </section>
     )

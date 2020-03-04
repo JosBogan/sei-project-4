@@ -17,7 +17,8 @@ class Project extends React.Component {
   state = {
     data: null,
     new: false,
-    project: null
+    project: null,
+    burgerSwitch: false
   }
 
   handleNewProject = () => {
@@ -33,39 +34,35 @@ class Project extends React.Component {
     this.setState({ data })
   }
 
+  burgerSwitch = () => {
+    this.setState({ burgerSwitch: !this.state.burgerSwitch })
+  }
+
   componentDidMount() {
     this.getUserData()
   }
 
   render() {
     if (!this.state.data) return null
-    const { projects } = this.state.data
+    const { collab_projects } = this.state.data
     return (
       <section className="project_page_wrapper">
         <div className="navbar_wrapper">
-          <Navbar image={this.state.data.image}/>
+          <Navbar image={this.state.data.image} burgerSwitch={this.burgerSwitch}/>
         </div>
         <div className="main_content_wrapper">
-          <div className="sidebar_wrapper">
+          <div className={`sidebar_wrapper ${this.state.burgerSwitch && 'burger_extended'}`}>
             <Sidebar 
-              projects={projects} 
+              projects={collab_projects} 
               handleNewProject={this.handleNewProject}
             />
           </div>
           <div className="project_main_wrapper">
           <Switch>
           <Route path="/project-board/notfound" component={NotFound} />
-            {/* <Route path="/project-board/u/*" component={NotFound} /> */}
-            <Route path="/project-board/new" render={(props) => <NewProject {...props} getUserData={this.getUserData}/>}/>
+            <Route path="/project-board/new" render={(props) => <NewProject {...props} getUserData={this.getUserData} userId={this.state.data.id}/>}/>
             <Route path="/project-board/user" render={(props) => <User {...props} getUserData={this.getUserData} user={this.state.data}/>}/>
-            {/* <Route path="/project-board/user" component={User}/> */}
-            {/* <Route path="/project-board/new" component={NewProject}/> */}
-            <Route path="/project-board/:id" render={(props) => <ProjectMain {...props} getUserData={this.getUserData}/>}/>
-            {/* <Route path="/project-board/:id" component={ProjectMain}/> */}
-            {/* { this.state.new ?
-              <NewProject /> :
-              <ProjectMain />
-            } */}
+            <Route path="/project-board/:id" render={(props) => <ProjectMain {...props} getUserData={this.getUserData} userId={this.state.data.id} user={this.state.data}/>}/>
           </Switch>
           </div>
         </div>

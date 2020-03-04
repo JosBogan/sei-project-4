@@ -2,6 +2,9 @@ from rest_framework import serializers
 from .models import Project, Comment
 from tasks.models import Task
 from columns.models import Column
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class CommentSerializer(serializers.ModelSerializer):
 
@@ -23,6 +26,20 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = '__all__'
 
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields =('username', 'image', 'id')
+
+class PopulatedCommentSerializer(serializers.ModelSerializer):
+
+    user = UserSerializer()
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
 class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -31,5 +48,6 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class PopulatedProjectTaskSerializer(ProjectSerializer):
 
+    users = UserSerializer(many=True)
     comments = CommentSerializer(many=True)
     tasks = TaskSerializer(many=True)

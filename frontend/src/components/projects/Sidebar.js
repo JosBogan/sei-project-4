@@ -25,17 +25,12 @@ class Sidebar extends React.Component {
     this.checkCorrectTagSelected()
   }
 
-  componentWillMount = () => {
-    this.checkCorrectTagSelected()
-  }
-
   handleProjectRedirect = (event) => {
     this.props.history.push(`/project-board/${event.target.getAttribute('name')}`)
     this.setState({ selected: event.target.getAttribute('name') })
   }
 
   render() {
-    console.log(this.state)
     return (
       <section className="sidebar">
         <div className="project_tag_container">

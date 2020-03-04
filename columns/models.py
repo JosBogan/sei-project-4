@@ -12,6 +12,12 @@ class Column(models.Model):
         ('in progress', 'In Progress'),
         ('stuck', 'Stuck'),
     ]
+    PRIORITY_CHOICES = [
+        ('urgent', 'Urgent'),
+        ('high', 'High'),
+        ('medium', 'Medium'),
+        ('low', 'Low')
+    ]
     COLUMN_TYPE_CHOICES = [
         ('status', 'Status'),
         ('text', 'Text'),
@@ -21,7 +27,8 @@ class Column(models.Model):
         ('priority', 'Priority'),
         ('numbers', 'Numbers'),
         ('checkbox', 'Checkbox'),
-        ('progress', 'Progress')
+        ('progress', 'Progress'),
+        ('file', 'File')
     ]
     COL_ID = 1
 
@@ -30,4 +37,8 @@ class Column(models.Model):
     task = models.ForeignKey('tasks.Task', related_name='columns', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, blank=True)
     numbers = models.IntegerField(blank=True, null=True)
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, blank=True, null=True)
     users = models.ManyToManyField(User, blank=True, related_name='tasks')
+    text = models.CharField(max_length=15, blank=True, null=True)
+    date = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    file = models.CharField(max_length=500, blank=True, null=True)

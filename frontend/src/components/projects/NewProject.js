@@ -3,6 +3,8 @@ import axios from 'axios'
 
 import Auth from '../../lib/auth'
 
+import UserSearchModal from './UserSearchModal'
+
 class NewProject extends React.Component {
 
   state = {
@@ -12,6 +14,8 @@ class NewProject extends React.Component {
     },
     modal: false,
     users: null,
+    userSearch: '',
+    usersSelected: [],
     fieldError: false
   }
 
@@ -30,18 +34,35 @@ class NewProject extends React.Component {
   }
 
   handleGetUsers = async () => {
-    const { data } = await axios.get('/api/users', {
+    let { data } = await axios.get('/api/users', {
       headers: {
         Authorization: `Bearer ${Auth.getToken()}`
       }
     })
+    data = data.filter(user => user.id !== this.props.userId)
     this.setState({ users: data })
+  }
+
+  handleSearchChange = (event) => {
+    this.setState({ userSearch: event.target.value })
+  }
+
+  selectUser = (user) => {
+    let usersSelected = [ ...this.state.usersSelected ]
+    if (usersSelected.includes(user)) {
+      usersSelected = usersSelected.filter(item => item !== user)
+    } else {
+      usersSelected.push(user)
+    }
+    this.setState({ usersSelected })
   }
 
   handleSubmit = async (event) => {
     event.preventDefault()
+    const data = { ...this.state.data, users: this.state.usersSelected.map(user => user.id) }
+    console.log(data)
     try {
-      const res = await axios.post('/api/projects/', this.state.data, {
+      const res = await axios.post('/api/projects/', data, {
         headers: {
           Authorization: `Bearer ${Auth.getToken()}`
         }
@@ -50,6 +71,7 @@ class NewProject extends React.Component {
       this.props.history.push(`/project-board/${res.data.id}`)
     } catch (err) {
       if (err.response.data.name) this.setState({ fieldError: true })
+      console.log(err.response)
     }
   }
 
@@ -83,36 +105,30 @@ class NewProject extends React.Component {
                   />
               </div>
             </div>
-            <div className="new_project_input_wrapper">
+            <div className="new_project_input_wrapper new_project_user_show_wrapper">
               <button 
                 className="new_project_build_team_button button"
                 onClick={this.handleModal}
               >Build Your Team</button>
-              <div></div>
+              <div className="new_project_user_show">{
+                this.state.usersSelected.map(user => (
+                  <div key={user.id} className="new_project_user_display_image" style={{ backgroundImage: `url(${user.image}` }}></div>
+                ))
+              }</div>
             </div>
           </div>
           <button className="button new_project_submit_button" type="submit">Submit</button>
         </form>
         </div>
         { this.state.modal &&
-        <>
-        <div 
-          className="modal"
-          onClick={this.handleModal}
-        >
-        </div>
-        <div className="modal_content_wrapper">
-            <div className="modal_content">
-              <h2 className="modal_header">Users</h2>
-            <input className="input modal_input"/>
-            <div>
-              {/* {this.state.users.map(user => {
-                <div></div>
-              })} */}
-            </div>
-            </div>
-          </div>
-        </>
+          <UserSearchModal 
+            handleModal={this.handleModal} 
+            handleSearchChange={this.handleSearchChange}
+            userSearch={this.state.userSearch}
+            users={this.state.users}
+            selectUser={this.selectUser}
+            usersSelected={this.state.usersSelected}
+            />
         }
       </section>
     )
