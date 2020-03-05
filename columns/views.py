@@ -31,6 +31,7 @@ class ColumnListView(APIView):
                     return Response(column.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
             serialized_project = PopulatedProjectSerializer(project)
             Column.COL_ID += 1
+            print(Column.COL_ID)
             return Response(serialized_project.data, status=HTTP_201_CREATED)
         except Project.DoesNotExist:
             return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)

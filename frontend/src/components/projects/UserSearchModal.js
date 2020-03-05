@@ -12,8 +12,8 @@ class UserSearchModal extends React.Component {
         >
         </div>
         <div className="modal_content_wrapper">
-            <div className="modal_content">
-              <h2 className="modal_header">Users</h2>
+          <div className="modal_content">
+            <h2 className="modal_header">Users</h2>
             <input 
               className="input modal_input"
               placeholder="Enter Name"
@@ -25,7 +25,7 @@ class UserSearchModal extends React.Component {
               this.props.users.filter(user => (
                 user.username.toLowerCase().includes(this.props.userSearch.toLowerCase()) ||
                 user.email.toLowerCase().includes(this.props.userSearch.toLowerCase())
-                )).map(user => (
+              )).map(user => (
                 <div
                   key={user.id}
                   onClick={() => this.props.selectUser(user)}
@@ -45,9 +45,9 @@ class UserSearchModal extends React.Component {
                 </div>
               ))}
             </div>
-            </div>
           </div>
-        </>
+        </div>
+      </>
     )
   }
 

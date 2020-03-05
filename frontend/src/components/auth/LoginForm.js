@@ -55,7 +55,7 @@ class LoginForm extends React.Component {
           <div>
             <label className={`input_label ${focus.email || data.email ? ' ' : 'input_label_on_focus'}`}>
               Email <span className="error_text error_text_logreg">{this.state.error}</span>
-              </label>
+            </label>
             <div>
               <input 
                 name="email"
@@ -71,7 +71,7 @@ class LoginForm extends React.Component {
           <div>
             <label className={`input_label ${focus.password || data.password ? ' ' : 'input_label_on_focus'}`}>
               Password <span className="error_text error_text_logreg">{this.state.error}</span>
-              </label>
+            </label>
             <div>
               <input 
                 name="password"

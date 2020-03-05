@@ -58,12 +58,12 @@ class Project extends React.Component {
             />
           </div>
           <div className="project_main_wrapper">
-          <Switch>
-          <Route path="/project-board/notfound" component={NotFound} />
-            <Route path="/project-board/new" render={(props) => <NewProject {...props} getUserData={this.getUserData} userId={this.state.data.id}/>}/>
-            <Route path="/project-board/user" render={(props) => <User {...props} getUserData={this.getUserData} user={this.state.data}/>}/>
-            <Route path="/project-board/:id" render={(props) => <ProjectMain {...props} getUserData={this.getUserData} userId={this.state.data.id} user={this.state.data}/>}/>
-          </Switch>
+            <Switch>
+              <Route path="/project-board/notfound" component={NotFound} />
+              <Route path="/project-board/new" render={(props) => <NewProject {...props} getUserData={this.getUserData} userId={this.state.data.id}/>}/>
+              <Route path="/project-board/user" render={(props) => <User {...props} getUserData={this.getUserData} user={this.state.data}/>}/>
+              <Route path="/project-board/:id" render={(props) => <ProjectMain {...props} getUserData={this.getUserData} userId={this.state.data.id} user={this.state.data}/>}/>
+            </Switch>
           </div>
         </div>
       </section>

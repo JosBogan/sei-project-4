@@ -11,7 +11,9 @@ class TextPicker extends React.Component{
           className="input"
           maxLength="10"
           onBlur={(event) => this.props.handleSetColumn(event)}
-          onKeyPress={(event) => {if (event.key === "Enter") return this.props.handleSetColumn(event)}}
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') return this.props.handleSetColumn(event)
+          }}
         />
       </div>
     )

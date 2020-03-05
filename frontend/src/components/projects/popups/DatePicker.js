@@ -15,10 +15,12 @@ class DatePicker extends React.Component {
           // defaultValue="????-??-??"
           onBlur={(event) => this.props.handleSetColumn(event)}
           onChange={(event) => this.props.handleSetColumn(event)}
-          onKeyPress={(event) => {if (event.key === "Enter") return this.props.handleSetColumn(event)}}
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') return this.props.handleSetColumn(event)
+          }}
         />
         {/* </label> */}
-    </div>
+      </div>
     )
   }
 }

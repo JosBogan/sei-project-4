@@ -79,46 +79,46 @@ class NewProject extends React.Component {
     return (
       <section className="project_main">
         <div className="new_project_wrapper">
-        <form className="new_project_form" onSubmit={this.handleSubmit}>
-          <h1 className="new_project_header">New Project</h1>
-          <div className="new_project_content">
-            <div className="new_project_input_wrapper">
-              <label className="new_project_input_label">Project Name</label>
-              <div>
-                <input 
-                  name="name"
-                  className="input new_project_input"
-                  onChange={this.handleChange}
-                />
-                {this.state.fieldError && <span className="error_text">This field is required</span>}
-              </div>
-            </div>
-            <div className="new_project_input_wrapper">
-              <label 
-                className="new_project_input_label"
-              >Description</label>
-              <div>
-                <textarea 
-                  className="new_project_text_field"
-                  name="description"
-                  onChange={this.handleChange}
+          <form className="new_project_form" onSubmit={this.handleSubmit}>
+            <h1 className="new_project_header">New Project</h1>
+            <div className="new_project_content">
+              <div className="new_project_input_wrapper">
+                <label className="new_project_input_label">Project Name</label>
+                <div>
+                  <input 
+                    name="name"
+                    className="input new_project_input"
+                    onChange={this.handleChange}
                   />
+                  {this.state.fieldError && <span className="error_text">This field is required</span>}
+                </div>
+              </div>
+              <div className="new_project_input_wrapper">
+                <label 
+                  className="new_project_input_label"
+                >Description</label>
+                <div>
+                  <textarea 
+                    className="new_project_text_field"
+                    name="description"
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </div>
+              <div className="new_project_input_wrapper new_project_user_show_wrapper">
+                <button 
+                  className="new_project_build_team_button button"
+                  onClick={this.handleModal}
+                >Build Your Team</button>
+                <div className="new_project_user_show">{
+                  this.state.usersSelected.map(user => (
+                    <div key={user.id} className="new_project_user_display_image" style={{ backgroundImage: `url(${user.image}` }}></div>
+                  ))
+                }</div>
               </div>
             </div>
-            <div className="new_project_input_wrapper new_project_user_show_wrapper">
-              <button 
-                className="new_project_build_team_button button"
-                onClick={this.handleModal}
-              >Build Your Team</button>
-              <div className="new_project_user_show">{
-                this.state.usersSelected.map(user => (
-                  <div key={user.id} className="new_project_user_display_image" style={{ backgroundImage: `url(${user.image}` }}></div>
-                ))
-              }</div>
-            </div>
-          </div>
-          <button className="button new_project_submit_button" type="submit">Submit</button>
-        </form>
+            <button className="button new_project_submit_button" type="submit">Submit</button>
+          </form>
         </div>
         { this.state.modal &&
           <UserSearchModal 
@@ -128,7 +128,7 @@ class NewProject extends React.Component {
             users={this.state.users}
             selectUser={this.selectUser}
             usersSelected={this.state.usersSelected}
-            />
+          />
         }
       </section>
     )

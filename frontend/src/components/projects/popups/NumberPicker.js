@@ -11,7 +11,9 @@ class NumberPicker extends React.Component{
           autoFocus
           className="input"
           onBlur={(event) => this.props.handleSetColumn(event)}
-          onKeyPress={(event) => {if (event.key === "Enter") return this.props.handleSetColumn(event)}}
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') return this.props.handleSetColumn(event)
+          }}
         />
       </div>
     )

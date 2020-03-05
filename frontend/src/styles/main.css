@@ -96,7 +96,7 @@ a {
 }
 
 .auth_wrapper_register {
-  height: 470px;
+  height: 485px;
 }
 
 .login_wrapper > div {
@@ -274,6 +274,11 @@ a {
   /* justify-content: ; */
 }
 
+.navbar_left {
+  display: flex;
+  align-items: center;
+}
+
 .nav_user_image {
   height: 50px;
   width: 50px;
@@ -286,10 +291,12 @@ a {
 .website_icon {
   height: 45px;
   width: 45px;
-  background-image: url(../assets//kaku_icon.svg);
+  background-image: url(../assets/Kaku_icon_3.png);
   background-position: center;
   background-size: cover;
   float: left;
+  cursor: pointer;
+
 }
 
 .logout_button {
@@ -544,7 +551,7 @@ p.col_header_invis {
 }
 
 .project_chat_wrapper {
-  width: 500px;
+  width: 600px;
   pointer-events: all;
   background: var(--light_colour);
   padding: 50px 30px 0 30px;
@@ -584,6 +591,7 @@ p.col_header_invis {
 .new_comment_text_field, .comment_text_field {
   flex-grow: 1;
   margin-left: 30px;
+  margin-right: 80px;
   border: 1px solid rgb(175, 175, 175);
   border-radius: 5px;
   resize: none;
@@ -605,7 +613,7 @@ p.col_header_invis {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 0 30px 0 0;
+  margin: 0 30px 0 80px;
 }
 
 .comment_text_field > h4 {
@@ -619,7 +627,7 @@ p.col_header_invis {
 
 .comment_owned {
   background: var(--teal);
-  margin: 0 0 0 30px;
+  margin: 0 80px 0 30px;
 }
 
 .comment_owned > * {
@@ -1002,6 +1010,10 @@ div.column_file_mp3 {
 }
 
 div.column_file_jpeg {
+  background-image: url(../assets/jpg-svgrepo-com.svg);
+}
+
+div.column_file_jpg {
   background-image: url(../assets/jpg-svgrepo-com.svg);
 }
 
@@ -1390,6 +1402,7 @@ div.column_file_zip {
 .burger_menu {
   display: none;
   cursor: pointer;
+  margin-left: 30px;
 }
 
 .burger_menu_line {

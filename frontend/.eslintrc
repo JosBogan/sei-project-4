@@ -22,12 +22,6 @@
   },
   "rules": {
     "brace-style": "error",
-    "camelcase": [
-      "error",
-      {
-        "properties": "never"
-      }
-    ],
     "comma-dangle": [
       "error",
       "never"

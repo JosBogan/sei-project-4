@@ -17,14 +17,19 @@ class NavBar extends React.Component {
   render() {
     return (
       <nav className="navbar">
-        <div className="website_icon"></div>
-        <div
-          onClick={this.props.burgerSwitch} 
-          className="burger_menu"
+        <div className="navbar_left">
+          <div 
+            className="website_icon"
+            onClick={this.handleUserPage}
+          ></div>
+          <div
+            onClick={this.props.burgerSwitch} 
+            className="burger_menu"
           >
-          <div className="burger_menu_line"></div>
-          <div className="burger_menu_line"></div>
-          <div className="burger_menu_line"></div>
+            <div className="burger_menu_line"></div>
+            <div className="burger_menu_line"></div>
+            <div className="burger_menu_line"></div>
+          </div>
         </div>
         <div className="navbar_user_options">
           <button onClick={this.handleLogout} className="logout_button">
