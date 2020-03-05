@@ -34,9 +34,7 @@ class RegisterForm extends React.Component {
     } catch (err) {
       const errors = { ...err.response.data }
       for (const val in errors) {
-        console.log(typeof errors[val])
         if (typeof errors[val] !== String ) errors[val] = errors[val][0]
-        console.log(errors)
         if (errors[val].includes('blank')) {
           errors[val] = 'required'
         } else if (errors[val].includes('exist')) {
