@@ -184,9 +184,14 @@ def post(self, request, pk):
 Due to the unique nature of the column types it was also a challange to create customised popups for their inputs as they all required different information to be sucessfully sent and saved to the back end.
 
 ## What Next
+Were I to have more time on this project there are a number of features that I think would improve the experience however I think the most important thinks would be the following:
 
-Order projects and tasks, group and data management, more column types.
+* Changing much of the behind the scenes functinality of the front end so allow for smaller data requests to the back end.
+* The ability to drag, rearrange and order the projects in the side panel.
+* Assigning colours to each task and grouping them.
+* Column input redesign.
+* Add more column types.
 
 ## Key Learnings
 
-SOLO?
+Doing my final project solo really helped to give me a better understanding of all aspects of a web application. building a Django back end on my own and then doing the same with a react front end really helped to reinforce the skills that the project was supposed to exercise. I think one of my main take aways from the project was how difficult it can be to visualise database relationships and so how important it is to plan them well. Similarly learning how important it is to manage the amount of data being requested and sent to an application's back end is something that this project opened my eyes to.
