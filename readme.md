@@ -189,8 +189,12 @@ Were I to have more time on this project there are a number of features that I t
 * Changing much of the behind the scenes functinality of the front end so allow for smaller data requests to the back end.
 * The ability to drag, rearrange and order the projects in the side panel.
 * Assigning colours to each task and grouping them.
+* Improved column display - they currently show the raw data in the database
+* Seperate column name and type in the user model so the user can edit them
+* Allow for multiple users to be assigned to a task - already in back end.
 * Column input redesign.
 * Add more column types.
+* Add join project requests.
 
 ## Key Learnings
 
