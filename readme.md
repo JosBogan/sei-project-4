@@ -43,7 +43,7 @@ Kaku was my fourth project at General Assembly. This project was done solo and w
 * Open your chosen browser and navigate to `http://localhost:8000/`
 
 ## Overview
-Having been inspired by the outrageous number of Monday.com adverts on the internet, when time came to start thinking about the basis for this project, I already had the idea to do a similar table-based project management system. I decided to work alone for this project because I wanted to get the experience of doing every aspect of the project, front and back end. I also wanted to challenge myself as much as possible and I knew that in the back enbd the database relationships and logic were going to be very tricky whereas on the front end the layout and functionality were going to be very difficult to implement.
+Having been inspired by the outrageous number of Monday.com adverts on the internet, when time came to start thinking about the basis for this project, I already had the idea to do a similar table-based project management system. I decided to work alone for this project because I wanted to get the experience of doing every aspect of the project, front and back end. I also wanted to challenge myself as much as possible and I knew that the back end database relationships and logic were going to be very tricky whereas on the front end the layout and functionality were going to be very difficult to implement.
 
 # Walkthrough
 
