@@ -45,6 +45,18 @@ Kaku was my fourth project at General Assembly. This project was done solo and w
 ## Overview
 Having been inspired by the outrageous number of Monday.com adverts on the internet, when time came to start thinking about the basis for this project, I already had the idea to do a similar table-based project management system. I decided to work alone for this project because I wanted to get the experience of doing every aspect of the project, front and back end. I also wanted to challenge myself as much as possible and I knew that the back end database relationships and logic were going to be very tricky whereas on the front end the layout and functionality were going to be very difficult to implement.
 
+## Login/Register
+ 
+There is no email verification or password limitations so you can create a new user with any fake inputs as long as the email follows the correct format.
+
+Alternativly you can use the following test login:
+
+```
+email: test@email.com 
+password: pass
+```
+ 
+
 # Walkthrough
 
 ## Login/Register Page
@@ -144,7 +156,6 @@ class ColumnListView(APIView):
             return Response(serialized_project.data, status=HTTP_201_CREATED)
         except Project.DoesNotExist:
             return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
-}
 ```
 
 ## Wins
@@ -157,6 +168,7 @@ column[column.col_type] &&
 
 ## Challenges
 Whilst most aspects of the project were challenging and pushed me, due to the nature of my column implementation I ran into a couple of unexpected issues such as adding a new row after a column had already been added to the project. I realised that in doing this, the row would be created with no columns attached. I managed to get around this with the code below, where I loop through the first row on the project and save the same columns that it again but with a relationship to the new task.
+
 ```python
 def post(self, request, pk):
     request.data['project'] = pk
